@@ -1,6 +1,4 @@
-var map;
-var marker;
-var i;
+var map, i, marker, myinfowindow;
 var locations=
 [{title: 'Caffe Nero', location: {lat: 51.277588, lng: 1.082901}},
 {title: 'Starbucks', location: {lat: 51.278085, lng: 1.081973 }},
@@ -21,16 +19,26 @@ function initMap(){
         styles:styles
     });
 
-    for (var i=0; i<locations.length; i++){
+    myinfowindow = new google.maps.InfoWindow();
+
+    for (i=0; i<locations.length; i++){
         var cafeTitles = locations[i].title;
         var cafePositions = locations[i].location;
-
-        //console.log(locations[i]);
-
+        //console.log(locations[i]); // check
         marker = new google.maps.Marker({
             map:map,
             title: cafeTitles,
-            position: cafePositions
+            position: cafePositions,
+            //infowindow:myinfowindow
+            //icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
         });
-    }
+    (function (marker, cafeTitles) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    myinfowindow.open(map, marker);
+                    //console.log(cafeTitles); //check
+                    myinfowindow.setContent(cafeTitles);
+                });
+            })(marker, cafeTitles);
+
+}
 }
