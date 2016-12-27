@@ -31,13 +31,18 @@
     <div class="container">
         <div class= side-panel>
             <h1>Canterbury's Cafes </h1>
+            <div>
+                <ul data-bind="foreach: myOA">
+                    <li data-bind = "text: title"></li>
+                </ul>
+            </div>
         </div>
 
         <div id=map>
-
         </div>
     </div>
 
+    <script async defer src =library/knockout.js></script>
     <script async defer src=library/jscript.js></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDucc7pZ-EE072H5de6k4fqjdXipXWXtz4&callback=initMap">
     </script>
