@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Neighborhood Map Project</title>
 
     <style type="text/css">
-        body, html, .container {
+        body,
+        html,
+        .container {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
         }
 
-        .side-panel{
+        .side-panel {
             width: 25%;
             border: 1px solid red;
             text-align: center;
             position: absolute;
         }
+
         #map {
             width: 75%;
             float: right;
@@ -27,13 +31,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <div class= side-panel>
+        <div class=side-panel>
             <h1>Canterbury's Cafes </h1>
             <div>
                 <ul data-bind="foreach: myOA">
-                    <li data-bind = "text: title"></li>
+                    <li data-bind="text: title"></li>
                 </ul>
             </div>
         </div>
@@ -42,10 +47,11 @@
         </div>
     </div>
 
-    <script async defer src =library/knockout.js></script>
+    <script async defer src=library/knockout.js></script>
     <script async defer src=library/jscript.js></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDucc7pZ-EE072H5de6k4fqjdXipXWXtz4&callback=initMap">
     </script>
 
 </body>
+
 </html>
