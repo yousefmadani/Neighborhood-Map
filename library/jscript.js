@@ -200,7 +200,7 @@
                     return self.myOA();
                 } else {
                     return ko.utils.arrayFilter(self.myOA(), function(place){
-                        return place.title.toLowerCase().indexOf(filter);
+                        return place.title.toLowerCase().indexOf(filter) !== -1;
                     });
                 }
             });
