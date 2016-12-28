@@ -179,15 +179,6 @@
         }
 
 
-
-// Added 'stringStartsWith' function
-        ko.utils.stringStartsWith = function(string, startsWith) {
-            string = string || "";
-            if (startsWith.length > string.length) return false;
-            return string.substring(0, startsWith.length) === startsWith;
-        };
-
-
                 //The ViewModel
         ViewModel = function() {
             var self = this;
@@ -201,13 +192,15 @@
                 //console.log(locations[i].title.toLowerCase());
             }
 
+            console.log(self.myOA());
+            console.log(self.myOA().title);
             self.filteredLocations = ko.computed(function(){
                 var filter = self.filter().toLowerCase();
                 if(!filter){
                     return self.myOA();
                 } else {
                     return ko.utils.arrayFilter(self.myOA(), function(place){
-                        return ko.utils.stringStartsWith(place.title.toLowerCase(), filter);
+                        return place.title.toLowerCase().indexOf(filter);
                     });
                 }
             });
