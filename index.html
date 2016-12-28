@@ -37,6 +37,9 @@
         <div class=side-panel>
             <h1>Canterbury's Cafes </h1>
             <div>
+            <p>Filter: <input data-bind="value: filter, valueUpdate: 'afterkeydown'" /></p>
+            </div>
+            <div>
                 <ul data-bind="foreach: myOA">
                     <li data-bind="text: title"></li>
                 </ul>

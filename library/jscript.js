@@ -1,61 +1,61 @@
-    var map, i, marker, myinfowindow;
+    var map, i, marker, myinfowindow, ViewModel;
 
     var locations = [{
-            title: 'Caffe Nero',
-            location: {
-                lat: 51.277588,
-                lng: 1.082901
-            }
-        },
-        {
-            title: 'Starbucks',
-            location: {
-                lat: 51.278085,
-                lng: 1.081973
-            }
-        },
-        {
-            title: 'Cafe Turquoise',
-            location: {
-                lat: 51.278627,
-                lng: 1.081455
-            }
-        },
-        {
-            title: 'Burgate Coffee House',
-            location: {
-                lat: 51.279024,
-                lng: 1.081649
-            }
-        },
-        {
-            title: 'Pret A Manger',
-            location: {
-                lat: 51.278771,
-                lng: 1.080600
-            }
-        },
-        {
-            title: 'Cafe St Pierre',
-            location: {
-                lat: 51.280906,
-                lng: 1.076769
-            }
-        },
-        {
-            title: 'Costa Coffee',
-            location: {
-                lat: 51.279324,
-                lng: 1.079699
-            }
-        },
-        {
-            title: 'Patisserie Valerie',
-            location: {
-                lat: 51.279915,
-                lng: 1.078733
-            }
+        title: 'Caffe Nero',
+        location: {
+            lat: 51.277588,
+            lng: 1.082901
         }
+    },
+    {
+        title: 'Starbucks',
+        location: {
+            lat: 51.278085,
+            lng: 1.081973
+        }
+    },
+    {
+        title: 'Cafe Turquoise',
+        location: {
+            lat: 51.278627,
+            lng: 1.081455
+        }
+    },
+    {
+        title: 'Burgate Coffee House',
+        location: {
+            lat: 51.279024,
+            lng: 1.081649
+        }
+    },
+    {
+        title: 'Pret A Manger',
+        location: {
+            lat: 51.278771,
+            lng: 1.080600
+        }
+    },
+    {
+        title: 'Cafe St Pierre',
+        location: {
+            lat: 51.280906,
+            lng: 1.076769
+        }
+    },
+    {
+        title: 'Costa Coffee',
+        location: {
+            lat: 51.279324,
+            lng: 1.079699
+        }
+    },
+    {
+        title: 'Patisserie Valerie',
+        location: {
+            lat: 51.279915,
+            lng: 1.078733
+        }
+    }
     ];
 
     var styles = [{
@@ -178,17 +178,40 @@
             })(marker, cafeTitles);
         }
 
-        //The ViewModel
-        var ViewModel = function() {
+
+
+// Added 'stringStartsWith' function
+        ko.utils.stringStartsWith = function(string, startsWith) {
+            string = string || "";
+            if (startsWith.length > string.length) return false;
+            return string.substring(0, startsWith.length) === startsWith;
+        };
+
+
+                //The ViewModel
+        ViewModel = function() {
             var self = this;
             self.myOA = ko.observableArray();
+            self.filter = ko.observable('');
 
             // this is the second for-loop locations[i] that i make
             //Is there a way a can store locations[i] in a var then use it or something like that?
             for (i = 0; i < locations.length; i++) {
                 self.myOA.push(locations[i]);
-                //console.log(locations[i]);
+                //console.log(locations[i].title.toLowerCase());
             }
+
+            self.filteredLocations = ko.computed(function(){
+                var filter = self.filter().toLowerCase();
+                if(!filter){
+                    return self.myOA();
+                } else {
+                    return ko.utils.arrayFilter(self.myOA(), function(place){
+                        return ko.utils.stringStartsWith(place.title.toLowerCase(), filter);
+                    });
+                }
+            });
+
         };
         ko.applyBindings(new ViewModel());
     }
