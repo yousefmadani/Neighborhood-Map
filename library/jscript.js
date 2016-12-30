@@ -1,4 +1,5 @@
     var map, i, marker, myinfowindow, ViewModel;
+    var markersArray = [];
 
     var locations = [{
         title: 'Caffe Nero',
@@ -164,8 +165,9 @@
                 title: cafeTitles,
                 position: cafePositions,
             });
+            markersArray.push(marker);
+            console.log(markersArray);
             (function(marker, cafeTitles) {
-
                 // When a marker is clicked
                 google.maps.event.addListener(marker, "click", function() {
                     myinfowindow.open(map, marker);
@@ -185,15 +187,16 @@
             self.myOA = ko.observableArray();
             self.filter = ko.observable('');
 
+
             // this is the second for-loop locations[i] that i make
             //Is there a way a can store locations[i] in a var then use it or something like that?
             for (i = 0; i < locations.length; i++) {
                 self.myOA.push(locations[i]);
-                //console.log(locations[i].title.toLowerCase());
-            }
+                //self.myOA.push(marker);
+                //console.log(self.myOA()[i]);
 
-            console.log(self.myOA());
-            console.log(self.myOA().title);
+            }
+            //marker.setVisible(true)
             self.filteredLocations = ko.computed(function(){
                 var filter = self.filter().toLowerCase();
                 if(!filter){
@@ -204,7 +207,6 @@
                     });
                 }
             });
-
         };
         ko.applyBindings(new ViewModel());
     }
