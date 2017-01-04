@@ -194,13 +194,15 @@
             self.filteredLocations = ko.computed(function(){
                 var filter = self.filter().toLowerCase();
                 if(!filter){
+
                     return  self.myOA();
                 } else {
                     return ko.utils.arrayFilter(self.myOA(), function(place){
+
                         if (place.title.toLowerCase().indexOf(filter) !== -1){
-                        place.marker.setVisible(false);}
+                        place.marker.setVisible(true);}
                         else {
-                            place.marker.setVisible(true);
+                            place.marker.setVisible(false);
                         }
                         return place.title.toLowerCase().indexOf(filter) !== -1;
                     });
