@@ -197,9 +197,12 @@
                     return  self.myOA();
                 } else {
                     return ko.utils.arrayFilter(self.myOA(), function(place){
-                        return place.title.toLowerCase().indexOf(filter) !== -1 &&
-                        //place.marker.setVisible(true);
-                        console.log(place);
+                        if (place.title.toLowerCase().indexOf(filter) !== -1){
+                        place.marker.setVisible(false);}
+                        else {
+                            place.marker.setVisible(true);
+                        }
+                        return place.title.toLowerCase().indexOf(filter) !== -1;
                     });
                 }
             });
