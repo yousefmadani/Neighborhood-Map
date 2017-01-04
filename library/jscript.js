@@ -166,41 +166,40 @@
             // this is the second for-loop locations[i] that i make
             //Is there a way a can store locations[i] in a var then use it or something like that?
             for (i = 0; i < locations.length; i++) {
-                self.myOA.push(locations[i]);
-
+            self.myOA.push(locations[i]);
             var cafeTitles = locations[i].title;
             var cafePositions = locations[i].location;
-            (function(marker, cafeTitles) {
+
+            (function(marker, location) {
                 marker = new google.maps.Marker({
                 map: map,
-                title: cafeTitles,
-                position: cafePositions,
+                title: location.title,
+                position: location.location,
             });
                 // When a marker is clicked
                 google.maps.event.addListener(marker, "click", function() {
                     myinfowindow.open(map, marker);
-                    //console.log(cafeTitles); //check
-                    myinfowindow.setContent(cafeTitles);
+                    myinfowindow.setContent(location.title);
                     marker.setIcon({
                         url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                     });
                 });
-   // self.marker.push(marker);
-    console.log(self.marker);
-            })(marker, cafeTitles);
+                location.marker = marker;
+               // console.log(locations[i]);
+            })(marker, locations[i]);
         }
+//console.log(this.myOA());
+//marker.setVisible(false)
 
-
-
-            //marker.setVisible(true)
             self.filteredLocations = ko.computed(function(){
                 var filter = self.filter().toLowerCase();
                 if(!filter){
                     return  self.myOA();
                 } else {
                     return ko.utils.arrayFilter(self.myOA(), function(place){
-                        return place.title.toLowerCase().indexOf(filter) !== -1;
-
+                        return place.title.toLowerCase().indexOf(filter) !== -1 &&
+                        //place.marker.setVisible(true);
+                        console.log(place);
                     });
                 }
             });
