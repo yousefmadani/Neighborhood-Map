@@ -167,16 +167,9 @@
 
 
 
-        // FourSquare
-        var fsUrl= 'https://api.foursquare.com/v2/venues/' +
-        'VENUE_ID/photos'+
-        '?client_id=CLIENT_ID'+
-        '&client_secret=CLIENT_SECRET'+
-        '&v=20170101';
 
-    $('CLIENT_ID').text(CLIENT_ID);
-    $(CLIENT_SECRET).append ('CLIENT_SECRET');
-        console.log(fsUrl);
+
+      //  console.log(fsPics);
 
                 //The ViewModel
         ViewModel = function() {
@@ -184,8 +177,24 @@
             self.myOA = ko.observableArray();
             self.filter = ko.observable('');
 
+
+
+
+
+
             for (i = 0; i < locations.length; i++) {
             self.myOA.push(locations[i]);
+
+            //console.log(locations[i].VENUE_ID);
+
+            // FourSquare API
+            var fsPics= 'https://api.foursquare.com/v2/venues/' +
+            locations[i].VENUE_ID +'/photos'+
+            '?client_id=' + CLIENT_ID +
+            '&client_secret=' + CLIENT_SECRET+
+            '&v=20170101';
+
+            console.log(fsPics); //Check
 
             (function(marker, location) {
                 marker = new google.maps.Marker({
@@ -196,14 +205,13 @@
                 // When a marker is clicked
                 google.maps.event.addListener(marker, "click", function() {
                     myinfowindow.open(map, marker);
-                    myinfowindow.setContent(location.title);
+                    myinfowindow.setContent(fsPics);
                     marker.setIcon({
                         url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                     });
 
                 });
                 location.marker = marker;
-               // console.log(locations[i]);
             })(marker, locations[i]);
         }
 //console.log(marker);
