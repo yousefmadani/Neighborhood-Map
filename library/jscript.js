@@ -166,17 +166,24 @@
         myinfowindow = new google.maps.InfoWindow();
 
 
-        var fsUrl= "https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815&ll=40.7,-74&query=sushi";
+
+        // FourSquare
+        var fsUrl= 'https://api.foursquare.com/v2/venues/' +
+        'VENUE_ID/photos'+
+        '?client_id=CLIENT_ID'+
+        '&client_secret=CLIENT_SECRET'+
+        '&v=20170101';
+
+    $('CLIENT_ID').text(CLIENT_ID);
+    $(CLIENT_SECRET).append ('CLIENT_SECRET');
+        console.log(fsUrl);
 
                 //The ViewModel
         ViewModel = function() {
             var self = this;
             self.myOA = ko.observableArray();
             self.filter = ko.observable('');
-           // self.marker= ko.observableArray();
 
-            // this is the second for-loop locations[i] that i make
-            //Is there a way a can store locations[i] in a var then use it or something like that?
             for (i = 0; i < locations.length; i++) {
             self.myOA.push(locations[i]);
 
