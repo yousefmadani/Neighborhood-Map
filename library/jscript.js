@@ -182,19 +182,37 @@
 
 
 
+
             for (i = 0; i < locations.length; i++) {
             self.myOA.push(locations[i]);
 
             //console.log(locations[i].VENUE_ID);
 
             // FourSquare API
-            var fsPics= 'https://api.foursquare.com/v2/venues/' +
-            locations[i].VENUE_ID +'/photos'+
-            '?client_id=' + CLIENT_ID +
-            '&client_secret=' + CLIENT_SECRET+
-            '&v=20170101';
+            // var fsPics= 'https://api.foursquare.com/v2/venues/' +
+            // locations[i].VENUE_ID +'/photos'+
+            // '?client_id=' + CLIENT_ID +
+            // '&client_secret=' + CLIENT_SECRET+
+            // '&v=20170101';
 
-            console.log(fsPics); //Check
+            //console.log(fsPics); //Check
+
+            $.ajax({
+                dataType: "jsonp",
+                url:'https://api.foursquare.com/v2/venues/' +
+                locations[i].VENUE_ID +'/photos'+
+                '?client_id=' + CLIENT_ID +
+                '&client_secret=' + CLIENT_SECRET+
+                '&v=20170101',
+
+                success: function (response){
+                    console.log(response);
+                }
+            });
+
+
+
+
 
             (function(marker, location) {
                 marker = new google.maps.Marker({
@@ -205,7 +223,7 @@
                 // When a marker is clicked
                 google.maps.event.addListener(marker, "click", function() {
                     myinfowindow.open(map, marker);
-                    myinfowindow.setContent(fsPics);
+                    myinfowindow.setContent();
                     marker.setIcon({
                         url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                     });
