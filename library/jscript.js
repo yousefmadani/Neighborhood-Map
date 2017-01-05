@@ -1,60 +1,70 @@
     var map, i, marker, myinfowindow, ViewModel;
+    var CLIENT_ID='ONOTLR5VFDN3OWMBQBKYHEYNUKYAH4MOXN3USUNSIBQANACE';
+    var CLIENT_SECRET='EXWK04HWAKTBIJZLFGYOM3RWL2VQMXD4XBOPZEYKWLPEPZOL';
 
     var locations = [{
         title: 'Caffe Nero',
         location: {
             lat: 51.277588,
             lng: 1.082901
-        }
+        },
+        VENUE_ID :'4ee32a5299119449ffd02cae'
     },
     {
         title: 'Starbucks',
         location: {
             lat: 51.278085,
             lng: 1.081973
-        }
+        },
+        VENUE_ID: '4c05484458dad13a97704897'
     },
     {
         title: 'Cafe Turquoise',
         location: {
             lat: 51.278627,
             lng: 1.081455
-        }
+        },
+        VENUE_ID :'527f9abb498e8d1d626f7f84'
     },
     {
         title: 'Burgate Coffee House',
         location: {
             lat: 51.279024,
             lng: 1.081649
-        }
+        },
+        VENUE_ID :'52a5c5ae11d293427cfbe5fa'
     },
     {
         title: 'Pret A Manger',
         location: {
             lat: 51.278771,
             lng: 1.080600
-        }
+        },
+        VENUE_ID:'4b9faacbf964a520213337e3'
     },
     {
         title: 'Cafe St Pierre',
         location: {
             lat: 51.280906,
             lng: 1.076769
-        }
+        },
+        VENUE_ID :'4bbeff6af353d13ae2e87d10'
     },
     {
         title: 'Costa Coffee',
         location: {
             lat: 51.279324,
             lng: 1.079699
-        }
+        },
+        VENUE_ID :'4cd29abe1a096a318895c7a7'
     },
     {
         title: 'Patisserie Valerie',
         location: {
             lat: 51.279915,
             lng: 1.078733
-        }
+        },
+        VENUE_ID :'4bdc8b30afe8c9b61fec4f85'
     }
     ];
 
@@ -156,6 +166,8 @@
         myinfowindow = new google.maps.InfoWindow();
 
 
+        var fsUrl= "https://api.foursquare.com/v2/venues/search?client_id=CLIENT_ID&client_secret=CLIENT_SECRET&v=20130815&ll=40.7,-74&query=sushi";
+
                 //The ViewModel
         ViewModel = function() {
             var self = this;
@@ -167,8 +179,6 @@
             //Is there a way a can store locations[i] in a var then use it or something like that?
             for (i = 0; i < locations.length; i++) {
             self.myOA.push(locations[i]);
-            var cafeTitles = locations[i].title;
-            var cafePositions = locations[i].location;
 
             (function(marker, location) {
                 marker = new google.maps.Marker({
@@ -183,18 +193,17 @@
                     marker.setIcon({
                         url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                     });
+
                 });
                 location.marker = marker;
                // console.log(locations[i]);
             })(marker, locations[i]);
         }
-//console.log(this.myOA());
-//marker.setVisible(false)
+//console.log(marker);
 
             self.filteredLocations = ko.computed(function(){
                 var filter = self.filter().toLowerCase();
                 if(!filter){
-
                     return  self.myOA();
                 } else {
                     return ko.utils.arrayFilter(self.myOA(), function(place){
