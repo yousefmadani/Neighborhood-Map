@@ -1,71 +1,71 @@
     var map, i, marker, myinfowindow, ViewModel;
-    var CLIENT_ID='ONOTLR5VFDN3OWMBQBKYHEYNUKYAH4MOXN3USUNSIBQANACE';
-    var CLIENT_SECRET='EXWK04HWAKTBIJZLFGYOM3RWL2VQMXD4XBOPZEYKWLPEPZOL';
+    var CLIENT_ID = 'ONOTLR5VFDN3OWMBQBKYHEYNUKYAH4MOXN3USUNSIBQANACE';
+    var CLIENT_SECRET = 'EXWK04HWAKTBIJZLFGYOM3RWL2VQMXD4XBOPZEYKWLPEPZOL';
 
     var locations = [{
-        title: 'Caffe Nero',
-        location: {
-            lat: 51.277588,
-            lng: 1.082901
+            title: 'Caffe Nero',
+            location: {
+                lat: 51.277588,
+                lng: 1.082901
+            },
+            VENUE_ID: '4ee32a5299119449ffd02cae'
         },
-        VENUE_ID :'4ee32a5299119449ffd02cae'
-    },
-    {
-        title: 'Starbucks',
-        location: {
-            lat: 51.278085,
-            lng: 1.081973
+        {
+            title: 'Starbucks',
+            location: {
+                lat: 51.278085,
+                lng: 1.081973
+            },
+            VENUE_ID: '4c05484458dad13a97704897'
         },
-        VENUE_ID: '4c05484458dad13a97704897'
-    },
-    {
-        title: 'Cafe Turquoise',
-        location: {
-            lat: 51.278627,
-            lng: 1.081455
+        {
+            title: 'Cafe Turquoise',
+            location: {
+                lat: 51.278627,
+                lng: 1.081455
+            },
+            VENUE_ID: '527f9abb498e8d1d626f7f84'
         },
-        VENUE_ID :'527f9abb498e8d1d626f7f84'
-    },
-    {
-        title: 'Burgate Coffee House',
-        location: {
-            lat: 51.279024,
-            lng: 1.081649
+        {
+            title: 'Burgate Coffee House',
+            location: {
+                lat: 51.279024,
+                lng: 1.081649
+            },
+            VENUE_ID: '52a5c5ae11d293427cfbe5fa'
         },
-        VENUE_ID :'52a5c5ae11d293427cfbe5fa'
-    },
-    {
-        title: 'Pret A Manger',
-        location: {
-            lat: 51.278771,
-            lng: 1.080600
+        {
+            title: 'Pret A Manger',
+            location: {
+                lat: 51.278771,
+                lng: 1.080600
+            },
+            VENUE_ID: '4b9faacbf964a520213337e3'
         },
-        VENUE_ID:'4b9faacbf964a520213337e3'
-    },
-    {
-        title: 'Cafe St Pierre',
-        location: {
-            lat: 51.280906,
-            lng: 1.076769
+        {
+            title: 'Cafe St Pierre',
+            location: {
+                lat: 51.280906,
+                lng: 1.076769
+            },
+            VENUE_ID: '4bbeff6af353d13ae2e87d10'
         },
-        VENUE_ID :'4bbeff6af353d13ae2e87d10'
-    },
-    {
-        title: 'Costa Coffee',
-        location: {
-            lat: 51.279324,
-            lng: 1.079699
+        {
+            title: 'Costa Coffee',
+            location: {
+                lat: 51.279324,
+                lng: 1.079699
+            },
+            VENUE_ID: '4cd29abe1a096a318895c7a7'
         },
-        VENUE_ID :'4cd29abe1a096a318895c7a7'
-    },
-    {
-        title: 'Patisserie Valerie',
-        location: {
-            lat: 51.279915,
-            lng: 1.078733
-        },
-        VENUE_ID :'4bdc8b30afe8c9b61fec4f85'
-    }
+        {
+            title: 'Patisserie Valerie',
+            location: {
+                lat: 51.279915,
+                lng: 1.078733
+            },
+            VENUE_ID: '4bdc8b30afe8c9b61fec4f85'
+        }
     ];
 
     var styles = [{
@@ -166,84 +166,61 @@
         myinfowindow = new google.maps.InfoWindow();
 
 
-
-
-
-      //  console.log(fsPics);
-
-                //The ViewModel
+        //The ViewModel
         ViewModel = function() {
             var self = this;
             self.myOA = ko.observableArray();
             self.filter = ko.observable('');
 
 
-
-
-
-
-
             for (i = 0; i < locations.length; i++) {
-            self.myOA.push(locations[i]);
+                self.myOA.push(locations[i]);
 
-            //console.log(locations[i].VENUE_ID);
-
-            // FourSquare API
-            // var fsPics= 'https://api.foursquare.com/v2/venues/' +
-            // locations[i].VENUE_ID +'/photos'+
-            // '?client_id=' + CLIENT_ID +
-            // '&client_secret=' + CLIENT_SECRET+
-            // '&v=20170101';
-
-            //console.log(fsPics); //Check
-
-            $.ajax({
-                dataType: "jsonp",
-                url:'https://api.foursquare.com/v2/venues/' +
-                locations[i].VENUE_ID +'/photos'+
-                '?client_id=' + CLIENT_ID +
-                '&client_secret=' + CLIENT_SECRET+
-                '&v=20170101',
-
-                success: function (response){
-                    console.log(response);
-                }
-            });
-
-
-
-
-
-            (function(marker, location) {
-                marker = new google.maps.Marker({
-                map: map,
-                title: location.title,
-                position: location.location,
-            });
-                // When a marker is clicked
-                google.maps.event.addListener(marker, "click", function() {
-                    myinfowindow.open(map, marker);
-                    myinfowindow.setContent();
-                    marker.setIcon({
-                        url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                (function(marker, location) {
+                    marker = new google.maps.Marker({
+                        map: map,
+                        title: location.title,
+                        position: location.location,
                     });
+                    // When a marker is clicked
+                    google.maps.event.addListener(marker, "click", function() {
+                        myinfowindow.open(map, marker);
+                        marker.setIcon({
+                            url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                        });
 
+                    });
+                    location.marker = marker;
+                })(marker, locations[i]);
+
+                $.ajax({
+                    dataType: "jsonp",
+                    url: 'https://api.foursquare.com/v2/venues/' +
+                        locations[i].VENUE_ID + '/photos' +
+                        '?client_id=' + CLIENT_ID +
+                        '&client_secret=' + CLIENT_SECRET +
+                        '&v=20170101',
+
+                    success: function(response) {
+                        $(response.response.photos.items).each(function(i, val) {
+                            myinfowindow.setContent('<img src="' + val.prefix + '300' + val.suffix + '"><');
+                        });
+                        //console.log(response.response.photos.items);
+                    }
                 });
-                location.marker = marker;
-            })(marker, locations[i]);
-        }
-//console.log(marker);
+            }
+            //console.log(marker);
 
-            self.filteredLocations = ko.computed(function(){
+            self.filteredLocations = ko.computed(function() {
                 var filter = self.filter().toLowerCase();
-                if(!filter){
-                    return  self.myOA();
+                if (!filter) {
+                    return self.myOA();
                 } else {
-                    return ko.utils.arrayFilter(self.myOA(), function(place){
+                    return ko.utils.arrayFilter(self.myOA(), function(place) {
 
-                        if (place.title.toLowerCase().indexOf(filter) !== -1){
-                        place.marker.setVisible(true);}
-                        else {
+                        if (place.title.toLowerCase().indexOf(filter) !== -1) {
+                            place.marker.setVisible(true);
+                        } else {
                             place.marker.setVisible(false);
                         }
                         return place.title.toLowerCase().indexOf(filter) !== -1;
