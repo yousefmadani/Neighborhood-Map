@@ -203,9 +203,9 @@
 
                     success: function(response) {
                         $(response.response.photos.items).each(function(i, val) {
-                            myinfowindow.setContent('<img src="' + val.prefix + '300' + val.suffix + '"><');
+                            myinfowindow.setContent('<img src="' + val.prefix + '250' + val.suffix + '">');
                         });
-                        //console.log(response.response.photos.items);
+                        console.log(response.response.photos.items);
                     }
                 });
             }
