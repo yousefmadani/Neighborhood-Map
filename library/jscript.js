@@ -202,10 +202,14 @@
                         '&v=20170101',
 
                     success: function(response) {
-                        $(response.response.photos.items).each(function(i, val) {
+                        var results=response.response.photos.items;
+
+                        //results.forEach(function(i, val) { //gives an error
+
+                        $ (results).each(function(i, val) {
                             myinfowindow.setContent('<img src="' + val.prefix + '250' + val.suffix + '">');
                         });
-                        console.log(response.response.photos.items);
+                        console.log(results);
                     }
                 });
             }
