@@ -181,8 +181,22 @@ function initMap() {
                     map: map,
                     title: location.title,
                     position: location.location,
+                    animation: google.maps.Animation.DROP,
                 });
                 // When a marker is clicked
+
+marker.addListener('click', toggleBounce);
+function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function(){
+  marker.setAnimation(null);
+}, 2323);
+        }
+      }
+
 
                 google.maps.event.addListener(marker, "click", function() {
 
@@ -198,39 +212,32 @@ function initMap() {
                             var results = response.response.photos.items;
 
                             myinfowindow.open(map, marker);
-                    marker.setIcon({
-                        url: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-                    });
+
 
                             $(results).each(function(i, val) {
                                 myinfowindow.setContent('<img src="' + val.prefix + '250' + val.suffix + '">');
                             });
-                            console.log(results);
+                        },
+                        error: function (noResponse){
+                            alert ("Failed to load data from Fourquare, try again later ");
                         }
                     });
                 });
                 location.marker = marker;
             })(marker, locations[i]);
-
-
         }
-        //console.log(marker);
+
+
 
         self.filteredLocations = ko.computed(function() {
             var filter = self.filter().toLowerCase();
-            if (!filter) {
-                return self.myOA();
-            } else {
-                return ko.utils.arrayFilter(self.myOA(), function(place) {
-
+             return ko.utils.arrayFilter(self.myOA(), function(place) {
                     if (place.title.toLowerCase().indexOf(filter) !== -1) {
                         place.marker.setVisible(true);
-                    } else {
+                        return true;
+                    } else
                         place.marker.setVisible(false);
-                    }
-                    return place.title.toLowerCase().indexOf(filter) !== -1;
                 });
-            }
         });
     };
     ko.applyBindings(new ViewModel());
