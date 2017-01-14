@@ -226,7 +226,7 @@ function initMap() {
                     google.maps.event.trigger(selection.marker, "click");
                 };
 
-console.log(marker);
+// console.log(marker); //check
             })(marker, locations[i]);
         }
 
