@@ -24,6 +24,10 @@
             background-color: #FFFDF9;
             }
 
+            li{
+                margin: 28px 0;
+            }
+
         #map {
             width: 75%;
             float: right;
@@ -41,7 +45,7 @@
             </div>
             <div>
                 <ul data-bind="foreach: filteredLocations">
-                    <li data-bind="text: title"></li>
+                    <li data-bind="text: title, click: highlightSelection"></li>
                 </ul>
             </div>
         </div>

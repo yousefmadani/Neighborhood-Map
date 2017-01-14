@@ -183,7 +183,6 @@ function initMap() {
                     position: location.location,
                     animation: google.maps.Animation.DROP,
                 });
-                // When a marker is clicked
 
 marker.addListener('click', toggleBounce);
 function toggleBounce() {
@@ -194,8 +193,11 @@ function toggleBounce() {
         }
 
 
-                google.maps.event.addListener(marker, "click", function() {
 
+
+
+                // When a marker is clicked
+                google.maps.event.addListener(marker, "click", function() {
                     $.ajax({
                         dataType: "jsonp",
                         url: 'https://api.foursquare.com/v2/venues/' +
@@ -223,8 +225,7 @@ function toggleBounce() {
             })(marker, locations[i]);
         }
 
-
-
+        // the search filter
         self.filteredLocations = ko.computed(function() {
             var filter = self.filter().toLowerCase();
              return ko.utils.arrayFilter(self.myOA(), function(place) {
