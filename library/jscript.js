@@ -171,11 +171,8 @@ function initMap() {
         var self = this;
         self.myOA = ko.observableArray();
         self.filter = ko.observable('');
-
-
         for (i = 0; i < locations.length; i++) {
             self.myOA.push(locations[i]);
-
             (function(marker, location) {
                 marker = new google.maps.Marker({
                     map: map,
@@ -184,15 +181,19 @@ function initMap() {
                     animation: google.maps.Animation.DROP,
                 });
 
-marker.addListener('click', toggleBounce);
-function toggleBounce() {
-          marker.setAnimation(google.maps.Animation.BOUNCE);
-          setTimeout(function(){
-  marker.setAnimation(null);
-}, 2323);
-        }
+
+                marker.addListener('click', toggleBounce);
+                function toggleBounce() {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                    setTimeout(function() {
+                        marker.setAnimation(null);
+                    }, 2323);
+                }
 
 
+                self.highlightSelection = function() {
+                    google.maps.event.trigger(marker, "click");
+                };
 
 
 
@@ -216,8 +217,8 @@ function toggleBounce() {
                                 myinfowindow.setContent('<img src="' + val.prefix + '250' + val.suffix + '">');
                             });
                         },
-                        error: function (noResponse){
-                            alert ("Failed to load data from Fourquare, try again later ");
+                        error: function(noResponse) {
+                            alert("Failed to load data from Fourquare, try again later ");
                         }
                     });
                 });
@@ -228,13 +229,13 @@ function toggleBounce() {
         // the search filter
         self.filteredLocations = ko.computed(function() {
             var filter = self.filter().toLowerCase();
-             return ko.utils.arrayFilter(self.myOA(), function(place) {
-                    if (place.title.toLowerCase().indexOf(filter) !== -1) {
-                        place.marker.setVisible(true);
-                        return true;
-                    } else
-                        place.marker.setVisible(false);
-                });
+            return ko.utils.arrayFilter(self.myOA(), function(place) {
+                if (place.title.toLowerCase().indexOf(filter) !== -1) {
+                    place.marker.setVisible(true);
+                    return true;
+                } else
+                    place.marker.setVisible(false);
+            });
         });
     };
     ko.applyBindings(new ViewModel());
