@@ -1,7 +1,10 @@
 var map, i, marker, myinfowindow, ViewModel;
+
+// ---------- FourSquare's API ID's ----------
 var CLIENT_ID = 'ONOTLR5VFDN3OWMBQBKYHEYNUKYAH4MOXN3USUNSIBQANACE';
 var CLIENT_SECRET = 'EXWK04HWAKTBIJZLFGYOM3RWL2VQMXD4XBOPZEYKWLPEPZOL';
 
+// ---------- Hard-coded locations with FoursSquare VENUE_ID ----------
 var locations = [{
         title: 'Caffe Nero',
         location: {
@@ -68,6 +71,9 @@ var locations = [{
     }
 ];
 
+
+
+// ---------- Style's from SnazzyMaps ----------
 var styles = [{
     "featureType": "administrative",
     "elementType": "labels.text.fill",
@@ -153,6 +159,12 @@ var styles = [{
 }]; //Styles from https://snazzymaps.com/style/42415/bema-cafe but "poi.business" has been removed
 
 
+// ---------- Google's Error Handling ----------
+noGoogleResponse = function() {
+    alert("Failed to load data from Google, try again later");
+};
+
+// ---------- Initiate Google Map ----------
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -163,10 +175,11 @@ function initMap() {
         styles: styles
     });
 
+    // ---------- Create an Info Window ----------
     myinfowindow = new google.maps.InfoWindow();
 
 
-    //The ViewModel
+    // ---------- The ViewModel ----------
     ViewModel = function() {
         var self = this;
         self.myOA = ko.observableArray();
@@ -183,20 +196,21 @@ function initMap() {
                 });
 
 
+                // ---------- When a marker is clicked ----------
                 marker.addListener('click', toggleBounce);
+
                 function toggleBounce() {
                     marker.setAnimation(google.maps.Animation.BOUNCE);
-                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/coffeehouse.png');
-                    // from https://sites.google.com/site/gmapsdevelopment/
+                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/coffeehouse.png'); // from https://sites.google.com/site/gmapsdevelopment/
+
+                    // ---------- Return marker to default after certain time ----------
                     setTimeout(function() {
                         marker.setAnimation(null);
                         marker.setIcon();
                     }, 2323);
                 }
 
-
-
-                // When a marker is clicked
+                // ---------- Load FourSquare's API when marker is clicked ----------
                 google.maps.event.addListener(marker, "click", function() {
                     $.ajax({
                         dataType: "jsonp",
@@ -211,27 +225,29 @@ function initMap() {
 
                             myinfowindow.open(map, marker);
 
-
                             $(results).each(function(i, val) {
                                 myinfowindow.setContent('<img src="' + val.prefix + '250' + val.suffix + '">');
                             });
                         },
+                        // ---------- FourSquare's Error Handling ----------
                         error: function(noResponse) {
-                            alert("Failed to load data from Fourquare, try again later ");
+                            alert("Failed to load data from Fourquare, try again later");
                         }
                     });
                 });
+
+                // ---------- Select corresponding marker when list is clicked ----------
+
                 location.marker = marker;
                 self.selectSelection = function(selection) {
                     google.maps.event.trigger(selection.marker, "click");
                 };
 
-// console.log(marker); //check
+                // console.log(marker); //check
             })(marker, locations[i]);
         }
 
-
-        // the search filter
+        // ---------- The search filter bar ----------
         self.filteredLocations = ko.computed(function() {
             var filter = self.filter().toLowerCase();
             return ko.utils.arrayFilter(self.myOA(), function(place) {
