@@ -187,15 +187,11 @@ function initMap() {
 
 marker.addListener('click', toggleBounce);
 function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-          marker.setAnimation(null);
-        } else {
           marker.setAnimation(google.maps.Animation.BOUNCE);
           setTimeout(function(){
   marker.setAnimation(null);
 }, 2323);
         }
-      }
 
 
                 google.maps.event.addListener(marker, "click", function() {
