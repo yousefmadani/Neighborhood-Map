@@ -186,8 +186,11 @@ function initMap() {
                 marker.addListener('click', toggleBounce);
                 function toggleBounce() {
                     marker.setAnimation(google.maps.Animation.BOUNCE);
+                    marker.setIcon('http://maps.google.com/mapfiles/ms/icons/coffeehouse.png');
+                    // from https://sites.google.com/site/gmapsdevelopment/
                     setTimeout(function() {
                         marker.setAnimation(null);
+                        marker.setIcon();
                     }, 2323);
                 }
 
