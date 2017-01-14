@@ -171,6 +171,7 @@ function initMap() {
         var self = this;
         self.myOA = ko.observableArray();
         self.filter = ko.observable('');
+
         for (i = 0; i < locations.length; i++) {
             self.myOA.push(locations[i]);
             (function(marker, location) {
@@ -189,11 +190,6 @@ function initMap() {
                         marker.setAnimation(null);
                     }, 2323);
                 }
-
-
-                self.highlightSelection = function() {
-                    google.maps.event.trigger(marker, "click");
-                };
 
 
 
@@ -223,8 +219,14 @@ function initMap() {
                     });
                 });
                 location.marker = marker;
+                self.selectSelection = function(selection) {
+                    google.maps.event.trigger(selection.marker, "click");
+                };
+
+console.log(marker);
             })(marker, locations[i]);
         }
+
 
         // the search filter
         self.filteredLocations = ko.computed(function() {

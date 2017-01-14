@@ -45,8 +45,9 @@
             </div>
             <div>
                 <ul data-bind="foreach: filteredLocations">
-                    <li data-bind="text: title, click: highlightSelection"></li>
+                    <li data-bind="text: title, click: $parent.selectSelection"></li>
                 </ul>
+                <!--if you’re inside a foreach or a with block, but your handler function is on the root viewmodel or some other parent context, you’ll need to use a prefix such as $parent-->
             </div>
         </div>
 
