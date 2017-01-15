@@ -217,14 +217,15 @@ function initMap() {
                 // ---------- Load FourSquare's API when marker is clicked ----------
                 google.maps.event.addListener(marker, "click", function() {
                     $.ajax({
-                        dataType: "jsonp",
-                        url: 'https://api.foursquare.com/v2/venues/' +
-                            location.VENUE_ID + '/photos' +
-                            '?client_id=' + CLIENT_ID +
-                            '&client_secret=' + CLIENT_SECRET +
-                            '&v=20170101'})
+                            dataType: "jsonp",
+                            url: 'https://api.foursquare.com/v2/venues/' +
+                                location.VENUE_ID + '/photos' +
+                                '?client_id=' + CLIENT_ID +
+                                '&client_secret=' + CLIENT_SECRET +
+                                '&v=20170101'
+                        })
 
-                    .done(function(response) {
+                        .done(function(response) {
                             var results = response.response.photos.items;
 
                             myinfowindow.open(map, marker);
@@ -234,10 +235,10 @@ function initMap() {
                             });
                         })
                         // ---------- FourSquare's Error Handling ----------
-                        .fail (function() {
+                        .fail(function() {
                             alert("Failed to load data from Fourquare, try again later");
                         });
-                    });
+                });
 
                 // ---------- Select corresponding marker when list is clicked ----------
 
