@@ -38,6 +38,16 @@ A single-page application featuring a map of Canterbury’s Cafes that are locat
 - Udacity Forums [Handling Google Maps in Async and Fallback](https://discussions.udacity.com/t/handling-google-maps-in-async-and-fallback/34282)
 - [onerror Event] (http://www.w3schools.com/jsref/event_onerror.asp)
 - [jsbeautifier](http://jsbeautifier.org/)
+- [jQuery.ajax()](http://api.jquery.com/jquery.ajax/)
 
+### Changes made according to the review:
+In the index.html file: 
+- `Async defer` was removed from all the `<script>` tags except for G-Maps. 
+- `overflow: auto` added to the side panel. 
 
-
+In the jscript.js file: 
+- Assigned the array's length to a variable 
+- The marker bounce was changed to a multiplication of 700ms for a smoother stop/start. 
+- `success:` and `error:` methods were replaced with the new `.done()` and `.fail()`.
+- Removed the argument from inside the `.fail()` function 
+- search filter bar shortened as suggested.
