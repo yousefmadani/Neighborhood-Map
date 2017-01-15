@@ -211,7 +211,7 @@ function initMap() {
                     setTimeout(function() {
                         marker.setAnimation(null);
                         marker.setIcon();
-                    }, 200);
+                    }, 2100);
                 }
 
                 // ---------- Load FourSquare's API when marker is clicked ----------
