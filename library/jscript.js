@@ -179,14 +179,18 @@ function initMap() {
     myinfowindow = new google.maps.InfoWindow();
 
 
+
     // ---------- The ViewModel ----------
     ViewModel = function() {
         var self = this;
         self.myOA = ko.observableArray();
         self.filter = ko.observable('');
 
-        for (i = 0; i < locations.length; i++) {
+        len = locations.length;
+        for (i = 0; i < len; i++) {
             self.myOA.push(locations[i]);
+
+
             (function(marker, location) {
                 marker = new google.maps.Marker({
                     map: map,
@@ -207,7 +211,7 @@ function initMap() {
                     setTimeout(function() {
                         marker.setAnimation(null);
                         marker.setIcon();
-                    }, 2323);
+                    }, 200);
                 }
 
                 // ---------- Load FourSquare's API when marker is clicked ----------
@@ -218,9 +222,9 @@ function initMap() {
                             location.VENUE_ID + '/photos' +
                             '?client_id=' + CLIENT_ID +
                             '&client_secret=' + CLIENT_SECRET +
-                            '&v=20170101',
+                            '&v=20170101'})
 
-                        success: function(response) {
+                    .done(function(response) {
                             var results = response.response.photos.items;
 
                             myinfowindow.open(map, marker);
@@ -228,13 +232,12 @@ function initMap() {
                             $(results).each(function(i, val) {
                                 myinfowindow.setContent('<img src="' + val.prefix + '250' + val.suffix + '">');
                             });
-                        },
+                        })
                         // ---------- FourSquare's Error Handling ----------
-                        error: function(noResponse) {
+                        .fail (function() {
                             alert("Failed to load data from Fourquare, try again later");
-                        }
+                        });
                     });
-                });
 
                 // ---------- Select corresponding marker when list is clicked ----------
 
@@ -251,11 +254,10 @@ function initMap() {
         self.filteredLocations = ko.computed(function() {
             var filter = self.filter().toLowerCase();
             return ko.utils.arrayFilter(self.myOA(), function(place) {
-                if (place.title.toLowerCase().indexOf(filter) !== -1) {
-                    place.marker.setVisible(true);
-                    return true;
-                } else
-                    place.marker.setVisible(false);
+                var match = place.title.toLowerCase().indexOf(filter) !== -1; {
+                    place.marker.setVisible(match);
+                    return match;
+                }
             });
         });
     };
